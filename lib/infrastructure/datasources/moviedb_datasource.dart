@@ -11,16 +11,15 @@ import 'package:cinemapedia_flutter12/domain/datasources/movies_datasource.dart'
 import 'package:cinemapedia_flutter12/domain/entities/movie.dart';
 
 class MovieDBDataSource extends MoviesDataSource {
+  //https://api.themoviedb.org/3/movie/now_playing
   final dio = Dio(BaseOptions(
-      baseUrl: 'https://api.themoviedb.org/3',
-      queryParameters: {
-        'api_key': Environment.movieDBkey,
-        'language': 'es-MX'
-      }));
+    baseUrl: 'https://api.themoviedb.org/3',
+    queryParameters: {'language': 'es-MX', 'api_key': Environment.movieDBkey},
+  ));
 
   @override
   Future<List<Movie>> getNowPlaying({int page = 1}) async {
-    final response = await dio.get('/movie/now_playing/');
+    final response = await dio.get('/movie/now_playing');
 
     final movieDBresponse = MovieDbResponse.fromJson(response.data);
     final List<Movie> movies = movieDBresponse.results

@@ -8,3 +8,4 @@ Inicio proyecto: 10 abril 2024.
 # Pasos
 1. copiar el env.template y renombrarle a .env
 2. obtener el api key de themoviedb y pegarla en la variable
+3. obtener el api token de themoviedb y pegarla en la variable
