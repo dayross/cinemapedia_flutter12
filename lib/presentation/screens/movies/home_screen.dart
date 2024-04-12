@@ -27,7 +27,8 @@ class _HomeViewState extends ConsumerState<_HomeView> {
   @override
   void initState() {
     super.initState();
-    final movies = ref.read(nowPlayingMoviesProvider.notifier).loadNextPage();
+    //final movies = 
+    ref.read(nowPlayingMoviesProvider.notifier).loadNextPage();
   }
 
   @override
@@ -35,18 +36,11 @@ class _HomeViewState extends ConsumerState<_HomeView> {
     final nowPlayingMovies = ref.watch(nowPlayingMoviesProvider);
     return Column(
       children: [
-        CustomAppBar(),
-        Expanded(
-            child: ListView.builder(
-          itemCount: nowPlayingMovies.length,
-          itemBuilder: (context, index) {
-            final movie = nowPlayingMovies[index];
-            return ListTile(
-              title: Text(movie.title),
-              subtitle: Text(movie.originalTitle),
-            );
-          },
-        ))
+        const CustomAppBar(),
+
+        const SizedBox(height: 15,),
+         
+         MoviesSlideShow(movies: nowPlayingMovies)
       ],
     );
   }
