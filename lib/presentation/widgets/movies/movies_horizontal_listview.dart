@@ -3,7 +3,7 @@ import 'package:cinemapedia_flutter12/config/helpers/human_formats.dart';
 import 'package:flutter/material.dart';
 import '../../../domain/entities/movie.dart';
 
-class MovieHorizontalListview extends StatelessWidget {
+class MovieHorizontalListview extends StatefulWidget {
   final List<Movie> movies;
   final String? title;
   final String? subtitle;
@@ -17,26 +17,55 @@ class MovieHorizontalListview extends StatelessWidget {
       this.loadNextPage});
 
   @override
+  State<MovieHorizontalListview> createState() =>
+      _MovieHorizontalListviewState();
+}
+
+class _MovieHorizontalListviewState extends State<MovieHorizontalListview> {
+  final scrollController = ScrollController();
+  // cada que se añada un listener hay que agregar un dispose
+  @override
+  void initState() {
+    super.initState();
+    scrollController.addListener(() {
+      if (widget.loadNextPage == null) return;
+      if ((scrollController.position.pixels + 200) >=
+          scrollController.position.maxScrollExtent) {
+        print('Load next movies');
+        widget.loadNextPage!();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    scrollController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 374,
       child: Column(
         children: [
-          if (title != null || subtitle != null)
+          if (widget.title != null || widget.subtitle != null)
             _Title(
-              title: title,
-              subtitle: subtitle,
+              title: widget.title,
+              subtitle: widget.subtitle,
             ),
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
           Expanded(
               child: ListView.builder(
-            itemCount: movies.length,
+            // hay que asociar el scroll controller con su listview
+            controller: scrollController,
+            itemCount: widget.movies.length,
             scrollDirection: Axis.horizontal,
             physics: const BouncingScrollPhysics(),
             itemBuilder: (context, index) {
-              return _Slide(movie: movies[index]);
+              return _Slide(movie: widget.movies[index]);
             },
           ))
         ],
@@ -55,7 +84,7 @@ class _Slide extends StatelessWidget {
     final textStyle = Theme.of(context).textTheme;
     // IMAGEN de peliculas actuales
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 8),
+      margin: const EdgeInsets.symmetric(horizontal: 8),
       child: Column(
         //crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -70,10 +99,10 @@ class _Slide extends StatelessWidget {
                 fit: BoxFit.fitWidth,
                 loadingBuilder: ((context, child, loadingProgress) {
                   if (loadingProgress != null) {
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
+                    return const Padding(
+                      padding: EdgeInsets.all(8.0),
                       child: Center(
-                          child: const CircularProgressIndicator(
+                          child: CircularProgressIndicator(
                         strokeWidth: 2,
                       )),
                     );
@@ -84,7 +113,7 @@ class _Slide extends StatelessWidget {
             ),
           ),
 
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
 
@@ -92,31 +121,42 @@ class _Slide extends StatelessWidget {
 
           SizedBox(
             width: 150,
-            
-            child: Text(
-              movie.title, 
-              maxLines: 2, 
-              style: textStyle.titleSmall
-              ),),
+            child: Text(movie.title, maxLines: 2, style: textStyle.titleSmall),
+          ),
           // Rating
           SizedBox(
             width: 160,
             child: Row(
               children: [
-                if (movie.voteAverage < 4) Icon(Icons.star_border_rounded, color: Colors.yellow.shade800,),
-                if (movie.voteAverage < 8) Icon(Icons.star_half_rounded, color: Colors.yellow.shade800,),
-                if (movie.voteAverage >= 8) Icon(Icons.star_rate_rounded, color: Colors.yellow.shade800,),
-            
-                const SizedBox(width: 3,),  
-            
-                Text('${HumanFormats.decimals(movie.voteAverage)}', 
-                style: textStyle.bodyMedium?.copyWith(
-                  color: Colors.yellow.shade800),),
+                if (movie.voteAverage >= 8)
+                  Icon(
+                    Icons.star_rate_rounded,
+                    color: Colors.yellow.shade800,
+                  ),
                 
-                Spacer(),
-                
-                Text('${HumanFormats.number(movie.popularity)}', style: textStyle.bodyMedium,),
-                 
+                if (movie.voteAverage < 8 && movie.voteAverage > 4)
+                  Icon(
+                    Icons.star_half_rounded,
+                    color: Colors.yellow.shade800,
+                  ),
+                if (movie.voteAverage <= 4)
+                  Icon(
+                    Icons.star_border_rounded,
+                    color: Colors.yellow.shade800,
+                  ),
+                const SizedBox(
+                  width: 3,
+                ),
+                Text(
+                  '${HumanFormats.decimals(movie.voteAverage)}',
+                  style: textStyle.bodyMedium
+                      ?.copyWith(color: Colors.yellow.shade800),
+                ),
+                const Spacer(),
+                Text(
+                  '${HumanFormats.number(movie.popularity)}',
+                  style: textStyle.bodyMedium,
+                ),
               ],
             ),
           )
