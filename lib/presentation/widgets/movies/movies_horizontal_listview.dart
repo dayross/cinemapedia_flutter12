@@ -65,7 +65,7 @@ class _MovieHorizontalListviewState extends State<MovieHorizontalListview> {
             scrollDirection: Axis.horizontal,
             physics: const BouncingScrollPhysics(),
             itemBuilder: (context, index) {
-              return _Slide(movie: widget.movies[index]);
+              return FadeInRight(child: _Slide(movie: widget.movies[index]));
             },
           ))
         ],
@@ -107,7 +107,7 @@ class _Slide extends StatelessWidget {
                       )),
                     );
                   }
-                  return FadeInRight(child: child);
+                  return FadeInRight(child: child,);
                 }),
               ),
             ),
@@ -148,13 +148,13 @@ class _Slide extends StatelessWidget {
                   width: 3,
                 ),
                 Text(
-                  '${HumanFormats.decimals(movie.voteAverage)}',
+                  HumanFormats.decimals(movie.voteAverage),
                   style: textStyle.bodyMedium
                       ?.copyWith(color: Colors.yellow.shade800),
                 ),
                 const Spacer(),
                 Text(
-                  '${HumanFormats.number(movie.popularity)}',
+                  HumanFormats.number(movie.popularity),
                   style: textStyle.bodyMedium,
                 ),
               ],

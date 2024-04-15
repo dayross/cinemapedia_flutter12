@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:cinemapedia_flutter12/presentation/providers/movies/movies_repository_provider.dart';
 import 'package:cinemapedia_flutter12/presentation/providers/providers.dart';
 
@@ -53,6 +55,10 @@ class MoviesNotifier extends StateNotifier<List<Movie>> {
 
 
   Future<void> loadNextPage() async {
+    // TODO : modifique la función que hace que no se
+    // envien tantas peticiones al mismo tiempo ya que
+    // no me cargaba de esa manera para las demas peliculas
+    //hay que ajustarla para evitar el envio de peticiones multiples
     if (isLoading) return;
 
     isLoading = true;
