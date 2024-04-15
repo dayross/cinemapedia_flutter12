@@ -1,4 +1,3 @@
-import 'package:cinemapedia_flutter12/presentation/widgets/shared/custom_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cinemapedia_flutter12/presentation/providers/providers.dart';
@@ -35,9 +34,8 @@ class _HomeViewState extends ConsumerState<_HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    
-    final spotlightMovie =
-        ref.watch(movieSlideshowProvider);
+    final nowPlayingMovies = ref.watch(nowPlayingMoviesProvider);
+    final spotlightMovie = ref.watch(movieSlideshowProvider);
     return Column(
       children: [
         const CustomAppBar(),
@@ -45,7 +43,11 @@ class _HomeViewState extends ConsumerState<_HomeView> {
           height: 15,
         ),
         MoviesSlideShow(movies: spotlightMovie),
-        
+        MovieHorizontalListview(
+          movies: nowPlayingMovies,
+          title: 'Actualmente',
+          subtitle: 'Viernes 12',
+          ),
       ],
     );
   }
