@@ -28,14 +28,14 @@ class FullScreenLoader extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text('Espere por favor', style: textStyle.titleMedium),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           CircularProgressIndicator(
             strokeWidth: 2,
             color: colors.primary,
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           StreamBuilder(

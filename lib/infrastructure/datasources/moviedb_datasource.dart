@@ -4,6 +4,7 @@
 
 import 'package:cinemapedia_flutter12/config/constants/environment.dart';
 import 'package:cinemapedia_flutter12/infrastructure/mappers/movie_mapper.dart';
+import 'package:cinemapedia_flutter12/infrastructure/models/movie_db/movie_details.dart';
 import 'package:cinemapedia_flutter12/infrastructure/models/movie_db/moviedb_response.dart';
 import 'package:dio/dio.dart';
 
@@ -52,5 +53,17 @@ class MovieDBDataSource extends MoviesDataSource {
     final response =
         await dio.get('/movie/upcoming', queryParameters: {'page': page});
     return _jsonToMovie(response.data);
+  }
+
+
+  @override
+  Future<Movie> getMovieByID(String id) async {
+    final response = await dio.get('/movie/$id');
+    if (response.statusCode != 200) throw Exception('Movie not found');
+
+    final movieDetails = MovieDetails.fromJson(response.data);
+
+    final Movie movie = MovieMapper.movieDetailsToEntity(movieDetails);
+    return movie;
   }
 }

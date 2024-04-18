@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:cinemapedia_flutter12/config/helpers/human_formats.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../../../domain/entities/movie.dart';
 
 class MovieHorizontalListview extends StatefulWidget {
@@ -31,7 +32,6 @@ class _MovieHorizontalListviewState extends State<MovieHorizontalListview> {
       if (widget.loadNextPage == null) return;
       if ((scrollController.position.pixels + 200) >=
           scrollController.position.maxScrollExtent) {
-        print('Load next movies');
         widget.loadNextPage!();
       }
     });
@@ -107,7 +107,10 @@ class _Slide extends StatelessWidget {
                       )),
                     );
                   }
-                  return FadeInRight(child: child,);
+                  return GestureDetector(
+                    onTap: () => context.push('/movie/${movie.id}'),
+                    child: FadeInRight(child: child,));
+                  
                 }),
               ),
             ),
