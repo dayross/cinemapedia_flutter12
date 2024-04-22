@@ -2,7 +2,6 @@ import 'package:animate_do/animate_do.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:cinemapedia_flutter12/domain/entities/movie.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class MoviesSlideShow extends StatelessWidget {
   final List<Movie> movies;
