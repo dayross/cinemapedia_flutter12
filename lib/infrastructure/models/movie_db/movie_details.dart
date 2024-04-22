@@ -2,7 +2,7 @@
 class MovieDetails {
     final bool adult;
     final dynamic backdropPath;
-    final dynamic? belongsToCollection;
+    final dynamic belongsToCollection;
     final int budget;
     final List<Genre> genres;
     final String homepage;

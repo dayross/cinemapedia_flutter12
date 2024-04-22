@@ -4,7 +4,7 @@ import 'package:cinemapedia_flutter12/presentation/providers/providers.dart';
 import 'package:cinemapedia_flutter12/presentation/widgets/widgets.dart';
 
 class HomeView extends ConsumerStatefulWidget {
-  const HomeView();
+  const HomeView({super.key});
 
   @override
   HomeViewState createState() => HomeViewState();
