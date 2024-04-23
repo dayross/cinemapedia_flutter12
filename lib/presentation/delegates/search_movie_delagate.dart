@@ -129,7 +129,6 @@ class _MovieItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).colorScheme;
     final textStyle = Theme.of(context).textTheme;
     final size = MediaQuery.of(context).size;
     return GestureDetector(

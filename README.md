@@ -9,3 +9,17 @@ Inicio proyecto: 10 abril 2024.
 1. copiar el env.template y renombrarle a .env
 2. obtener el api key de themoviedb y pegarla en la variable
 3. obtener el api token de themoviedb y pegarla en la variable
+
+# Agregar IsarDB
+ 1. Insertar los comandos que se solicitan en el sitio web
+
+En dependencias:
+```
+flutter pub add isar isar_flutter_libs
+```
+
+En dependencias de dev
+```
+flutter pub add -d isar_generator build_runner
+```
+
